@@ -10,18 +10,19 @@ const initialState = {
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async (catagory = null, { rejectWithValue }) => {
-    let url = "https://fakestoreapi.com/products";
+    console.log(catagory);
+    let url = "https://fakestoreapi.com/products/";
 
     if (catagory) {
-      url = url + `/catagory/${catagory}`;
+      url = url + `category/${catagory}`;
     }
-    if (catagory === "all") {
+    if (catagory === "All") {
       url = "https://fakestoreapi.com/products";
     }
 
     try {
       const res = await fetch(url);
-      await pause(1000); //for showing the loader -->development purpose
+      await pause(300); //for showing the loader -->development purpose
       const result = await res.json();
       return result;
     } catch (e) {
