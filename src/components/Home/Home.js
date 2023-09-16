@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Card from "../Card/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../slices/productsSlice";
+import Shimmer from "../Card/Shimmer";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -12,18 +13,23 @@ const Home = () => {
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
-  if (isLoading) {
-    return "Loading...";
-  }
+
+  //   if (isLoading) {
+  //     return (
+  //       <div className="flex flex-wrap justify-center">
+  //         <Shimmer />;
+  //       </div>
+  //     );
+  //   }
 
   if (error) {
     return <h1 className="text-center text-red-600">{error}</h1>;
   }
   return (
     <div className="flex flex-wrap justify-center">
-      {products.map((product) => (
-        <Card key={product.id} {...product} />
-      ))}
+      {isLoading
+        ? [...Array(20)].map(() => <Shimmer />)
+        : products.map((product) => <Card key={product.id} {...product} />)}
     </div>
   );
 };

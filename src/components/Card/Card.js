@@ -1,42 +1,47 @@
 import React from "react";
+import { FaStar, FaCommentAlt } from "react-icons/fa";
 
 const Card = (props) => {
-  const { title, price, image, description, category } = props;
-  console.log(props);
+  const { title, price, image, description, category, rating } = props;
+
   return (
-    <div className="block m-4 w-72 rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-      <div
-        className="relative overflow-hidden bg-cover bg-no-repeat"
-        data-te-ripple-init
-        data-te-ripple-color="light"
-      >
-        <img
-          className="rounded-t-lg object-contain h-48 justify-center w-full"
-          src={image}
-          alt={title}
-        />
-        <a href="#!">
-          <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
-        </a>
-      </div>
-      <div className="p-6">
-        <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-          {title}
-        </h5>
-        <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-          {description}
-        </p>
-        <p>{category}</p>
-        <div className="flex justify-between items-center my-4">
-          <p>{price}</p>
-          <button
-            type="button"
-            className="inline-block rounded bg-indigo-700 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-indigo-500 "
-            data-te-ripple-init
-            data-te-ripple-color="light"
-          >
-            Add to cart
-          </button>
+    <div className=" h-2/4 m-4 w-72">
+      <div className="h-full rounded-lg border shadow-sm hover:shadow-xl">
+        <div className="relative overflow-hidden bg-cover bg-no-repeat flex justify-center p-1 h-36">
+          <img
+            className="lg:h-48 md:h-36 w-full object-contain object-center drop-shadow-md rounded-md"
+            src={image}
+            alt={title}
+          />
+        </div>
+        <div className="p-6">
+          <h2 className="text-xs uppercase title-font font-medium text-gray-500 mb-1">
+            {category}
+          </h2>
+          <h1 className=" line-clamp-1 title-font text-lg font-medium text-gray-900 mb-3">
+            {title}
+          </h1>
+          <p className="line-clamp-3 text-base leading-relaxed mb-4">
+            {description}
+          </p>
+          <h3 className="text-l font-bold mb-3">
+            Price: <span>${price}</span>
+          </h3>
+          <div class="flex items-center self-end flex-wrap">
+            <button
+              type="button"
+              className="inline-block rounded-full bg-indigo-900 p-2 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-indigo-500 "
+            >
+              Add to cart
+            </button>
+            <span class="text-gray-600 mr-2 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-1 py-1 border-r-2 border-gray-300">
+              <FaStar /> {rating.rate}
+            </span>
+            <span class="text-gray-600 inline-flex items-center leading-none text-sm">
+              <FaCommentAlt />
+              {rating?.count}
+            </span>
+          </div>
         </div>
       </div>
     </div>
