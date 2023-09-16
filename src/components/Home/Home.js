@@ -7,6 +7,7 @@ import Shimmer from "../Card/Shimmer";
 const Home = () => {
   const { products, isLoading, error } = useSelector((store) => store.products);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
@@ -14,10 +15,11 @@ const Home = () => {
   if (error) {
     return <h1 className="text-center text-red-600">{error}</h1>;
   }
+
   return (
     <div className="flex flex-wrap justify-center">
       {isLoading
-        ? [...Array(20)].map(() => <Shimmer />)
+        ? [...Array(20)].map((e, i) => <Shimmer key={i} />)
         : products.map((product) => <Card key={product.id} {...product} />)}
     </div>
   );

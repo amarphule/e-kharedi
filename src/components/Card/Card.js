@@ -27,17 +27,17 @@ const Card = (props) => {
           <h3 className="text-l font-bold mb-3">
             Price: <span>${price}</span>
           </h3>
-          <div class="flex items-center self-end flex-wrap">
+          <div className="flex items-center self-end flex-wrap">
             <button
               type="button"
               className="inline-block rounded-full bg-indigo-900 p-2 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-indigo-500 "
             >
               Add to cart
             </button>
-            <span class="text-gray-600 mr-2 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-1 py-1 border-r-2 border-gray-300">
+            <span className="text-gray-600 mr-2 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-1 py-1 border-r-2 border-gray-300">
               <FaStar /> {rating.rate}
             </span>
-            <span class="text-gray-600 inline-flex items-center leading-none text-sm">
+            <span className="text-gray-600 inline-flex items-center leading-none text-sm">
               <FaCommentAlt />
               {rating?.count}
             </span>

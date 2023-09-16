@@ -10,7 +10,6 @@ const initialState = {
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async (catagory = null, { rejectWithValue }) => {
-    console.log(catagory);
     let url = "https://fakestoreapi.com/products/";
 
     if (catagory) {
