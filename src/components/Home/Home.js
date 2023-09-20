@@ -3,10 +3,13 @@ import Card from "../Card/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../slices/productsSlice";
 import Shimmer from "../Card/Shimmer";
+import SearchProduct from "../Search/SearchProduct";
 
 const Home = () => {
   const { products, isLoading, error } = useSelector((store) => store.products);
   const dispatch = useDispatch();
+
+  const query = useSelector((store) => store.products.searchQuery);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -17,11 +20,16 @@ const Home = () => {
   }
 
   return (
-    <div className="flex flex-wrap justify-center">
-      {isLoading
-        ? [...Array(20)].map((e, i) => <Shimmer key={i} />)
-        : products.map((product) => <Card key={product.id} {...product} />)}
-    </div>
+    <>
+      <SearchProduct />
+      <div className="flex flex-wrap justify-center">
+        {isLoading
+          ? [...Array(20)].map((e, i) => <Shimmer key={i} />)
+          : products
+              .filter((item) => item.title.toLowerCase().includes(query))
+              .map((product) => <Card key={product.id} {...product} />)}
+      </div>
+    </>
   );
 };
 

@@ -3,8 +3,9 @@ import { pause } from "../components/Utils/pause";
 
 const initialState = {
   products: [],
-  isLoding: null,
+  isLoading: null,
   error: null,
+  searchQuery: "",
 };
 
 export const fetchProducts = createAsyncThunk(
@@ -33,20 +34,25 @@ export const fetchProducts = createAsyncThunk(
 const productsSlice = createSlice({
   name: "Products",
   initialState: initialState,
-  reducers: {},
-  extraReducers: {
-    [fetchProducts.pending]: (state) => {
-      state.isLoading = true;
+  reducers: {
+    searchProduct: (state, action) => {
+      state.searchQuery = action.payload;
     },
-    [fetchProducts.fulfilled]: (state, action) => {
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchProducts.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(fetchProducts.fulfilled, (state, action) => {
       state.isLoading = false;
       state.products = action.payload;
-    },
-    [fetchProducts.rejected]: (state, action) => {
+    });
+    builder.addCase(fetchProducts.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
-    },
+    });
   },
 });
 
+export const { searchProduct } = productsSlice.actions;
 export default productsSlice.reducer;

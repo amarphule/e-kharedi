@@ -1,11 +1,14 @@
 import React from "react";
 import { FaStar, FaCommentAlt } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../slices/cartSlice";
 
-const Card = (props) => {
-  const { title, price, image, description, category, rating } = props;
+const Card = (product) => {
+  const dispatch = useDispatch();
+  const { title, price, image, description, category, rating } = product;
 
   return (
-    <div className=" h-2/4 m-4 w-72">
+    <div className="h-2/4 m-4 w-72">
       <div className="h-full rounded-lg border shadow-sm hover:shadow-xl">
         <div className="relative overflow-hidden bg-cover bg-no-repeat flex justify-center p-1 h-36">
           <img
@@ -31,6 +34,7 @@ const Card = (props) => {
             <button
               type="button"
               className="inline-block rounded-full bg-indigo-900 p-2 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-indigo-500 "
+              onClick={() => dispatch(addToCart(product))}
             >
               Add to cart
             </button>
