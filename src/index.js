@@ -7,8 +7,10 @@ import { Provider } from "react-redux";
 import store from "./Store/Store";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Cart } from "./components/Cart/Cart";
-import Home from "./components/Home/Home";
+import { Cart } from "./pages/Cart/Cart";
+import Home from "./pages/Home/Home";
+import Login from "./pages/Login/Login";
+import PageNotFound from "./pages/PageNotFound/PageNotFound";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,7 @@ const router = createBrowserRouter([
         <App />
       </Provider>
     ),
+    errorElement: <PageNotFound />,
     children: [
       {
         path: "/",
@@ -30,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
     ],
   },

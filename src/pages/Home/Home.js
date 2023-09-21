@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import Card from "../Card/Card";
+import Card from "../../components/Card/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../slices/productsSlice";
-import Shimmer from "../Card/Shimmer";
-import SearchProduct from "../Search/SearchProduct";
+import Shimmer from "../../components/Card/Shimmer";
+import SearchProduct from "../../components/Search/SearchProduct";
 
 const Home = () => {
   const { products, isLoading, error } = useSelector((store) => store.products);
