@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CartCard from "../Card/CartCard";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { removeAll } from "../../slices/cartSlice";
+import { removeAll, totalCartPriceAndQuantity } from "../../slices/cartSlice";
 
 export const Cart = () => {
-  const cartItems = useSelector((store) => store?.cart?.cartItems);
+  const { cartItems, cartTotalAmount } = useSelector((store) => store?.cart);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(totalCartPriceAndQuantity());
+  }, [dispatch, cartItems]);
+
   return (
     <div className="container mx-auto mt-3">
       {cartItems.length === 0 ? (
@@ -87,7 +92,7 @@ export const Cart = () => {
               <span className="font-semibold text-sm uppercase">
                 Items {cartItems.length}
               </span>
-              <span className="font-semibold text-sm">590$</span>
+              <span className="font-semibold text-sm">${cartTotalAmount}</span>
             </div>
             <div>
               <div className="flex justify-between mt-10 mb-5">
@@ -118,7 +123,7 @@ export const Cart = () => {
             <div className="border-t mt-8">
               <div className="flex font-semibold justify-between py-6 text-sm uppercase">
                 <span>Total cost</span>
-                <span>$600</span>
+                <span>${Number(cartTotalAmount) + 10}</span>
               </div>
               <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
                 Checkout
