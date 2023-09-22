@@ -3,11 +3,14 @@ import logo from "../../assets/logo.svg";
 import { FaCartPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../slices/productsSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../../slices/UserSlice";
 const Header = () => {
   const [categories, setcategories] = useState(["All"]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartItems = useSelector((store) => store.cart?.cartItems?.length);
+  const { userToken } = useSelector((store) => store.user);
 
   const fetchCategory = async () => {
     let data = await fetch("https://fakestoreapi.com/products/categories");
@@ -20,6 +23,11 @@ const Header = () => {
 
   const handleCategory = (cat) => {
     dispatch(fetchProducts(cat));
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
   };
 
   return (
@@ -60,7 +68,11 @@ const Header = () => {
         </Link>
 
         <div className="ml-5">
-          <Link to="/login">Login</Link>
+          {userToken ? (
+            <Link onClick={handleLogout}>logout</Link>
+          ) : (
+            <Link to="/login">Login</Link>
+          )}
         </div>
       </div>
     </div>
