@@ -115,9 +115,13 @@ export const Cart = () => {
                 id="promo"
                 placeholder="Enter your code"
                 className="p-2 text-sm w-full"
+                readOnly
               />
             </div>
-            <button className="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">
+            <button
+              disabled
+              className="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm cursor-not-allowed text-white uppercase"
+            >
               Apply
             </button>
             <div className="border-t mt-8">

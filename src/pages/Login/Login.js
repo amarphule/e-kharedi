@@ -1,34 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../../slices/UserSlice";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [user, setUser] = useState({ username: "", password: "" });
+  const [user, setUser] = useState(null);
   const [asGuest, setAsGuest] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading, error, userInfo, success } = useSelector(
+  const { isLoading, error, userInfo, success, userToken } = useSelector(
     (store) => store.user
   );
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setAsGuest(false);
-    setUser({ username: "", password: "" });
-
+    setUser(null);
     if (asGuest) {
       dispatch(userLogin(user));
     }
-    navigate("/");
   };
+  useEffect(() => {
+    if (!!userToken) {
+      navigate("/");
+    }
+  });
   const handleChange = (e) => {
     setUser((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
   return (
-    <div className="h-screen flex bg-gray-bg1">
-      <div className="w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16">
+    <div className="h-screen flex bg-gray-50">
+      <div className="w-full max-w-md m-auto bg-white rounded-lg border border-slate-300 shadow-default py-10 px-16">
         <h1 className="text-2xl font-medium text-primary mt-4 mb-12 text-center">
           Log in to your account 🔐
         </h1>
@@ -36,7 +39,7 @@ const Login = () => {
           <p className="text-center text-green-600">
             {`${success} Welcome`}
             <span className="font-bold uppercase ml-1">
-              {userInfo.username}
+              {userInfo?.username}
             </span>
           </p>
         )}
@@ -51,6 +54,7 @@ const Login = () => {
               className="w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
               id="username"
               placeholder="Your username"
+              required
             />
           </div>
           <div>
@@ -62,6 +66,7 @@ const Login = () => {
               className="w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
               id="password"
               placeholder="Your Password"
+              required
             />
           </div>
           <div>
