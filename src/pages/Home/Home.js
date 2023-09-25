@@ -13,7 +13,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(fetchProducts());
-  }, []);
+  }, [dispatch]);
 
   if (error) {
     return <h1 className="text-center text-red-600">{error}</h1>;

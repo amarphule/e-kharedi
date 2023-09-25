@@ -1,17 +1,25 @@
 import React, { useEffect } from "react";
 import CartCard from "../../components/Card/CartCard";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { removeAll, totalCartPriceAndQuantity } from "../../slices/cartSlice";
 
 export const Cart = () => {
   const { cartItems, cartTotalAmount } = useSelector((store) => store?.cart);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(totalCartPriceAndQuantity());
   }, [dispatch, cartItems]);
 
+  const handleCheckout = () => {
+    toast(`Successfully checkout`, {
+      autoClose: 1500,
+    });
+    navigate("/");
+  };
   return (
     <div className="container mx-auto mt-3">
       {cartItems.length === 0 ? (
@@ -42,7 +50,10 @@ export const Cart = () => {
                 Shopping Cart
                 <p
                   className="text-sm cursor-pointer text-slate-500 py-1 px-3 text-center hover:bg-slate-700 hover:text-slate-50 bg-gray-300 rounded-3xl mt-2"
-                  onClick={() => dispatch(removeAll())}
+                  onClick={() => {
+                    dispatch(removeAll());
+                    toast.info("Removed all products", { autoClose: 1000 });
+                  }}
                 >
                   Clear Cart
                 </p>
@@ -135,7 +146,10 @@ export const Cart = () => {
                   ${Number(cartTotalAmount) + 10}
                 </span>
               </div>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+              <button
+                onClick={handleCheckout}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              >
                 Checkout
               </button>
             </div>

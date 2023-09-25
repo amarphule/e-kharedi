@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import {
   addToCart,
   quantityDecrease,
@@ -26,7 +27,12 @@ const CartCard = (item) => {
           </span>
           <span
             className="cursor-pointer font-semibold hover:text-red-500 text-gray-500 text-xs md:text-sm lg:text-base"
-            onClick={() => dispatch(removeFromCart(id))}
+            onClick={() => {
+              dispatch(removeFromCart(id));
+              toast(`Item removed from cart`, {
+                autoClose: 1500,
+              });
+            }}
           >
             Remove
           </span>

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 const initialState = {
   cartItems: [],
   cartTotalQuantity: 0,
@@ -14,9 +15,18 @@ const cartSlice = createSlice({
       );
       if (itemIndex !== -1) {
         state.cartItems[itemIndex].cartQuantity += 1;
+        toast(
+          `${state.cartItems[itemIndex].title.slice(
+            0,
+            16
+          )} quantity updated in cart`
+        );
       } else {
         const tempItem = { ...action.payload, cartQuantity: 1 };
         state.cartItems.push(tempItem);
+        toast(`${tempItem.title.slice(0, 16)} is added to cart`, {
+          autoClose: 1500,
+        });
       }
     },
     removeFromCart: (state, action) => {
