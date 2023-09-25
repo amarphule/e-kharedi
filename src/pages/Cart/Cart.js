@@ -22,7 +22,7 @@ export const Cart = () => {
           <p>
             <Link
               to="/"
-              className="flex font-semibold text-indigo-600 text-2xl "
+              className="flex font-semibold text-indigo-600 text-2xl"
             >
               <svg
                 className="fill-current mr-2 text-indigo-600 w-4"
@@ -35,23 +35,23 @@ export const Cart = () => {
           </p>
         </div>
       ) : (
-        <div className="flex shadow-md my-3">
-          <div className="w-3/4 bg-white px-16 py-3">
-            <div className="flex justify-between border-b pb-8">
-              <h1 className=" flex font-semibold flex-col text-2xl">
+        <div className="flex flex-col px-32 md:flex-row shadow-md my-3">
+          <div className="w-full md:w-3/4 bg-white px-4 py-3">
+            <div className="flex justify-between border-b pb-4">
+              <h1 className="font-semibold text-xl md:text-2xl">
                 Shopping Cart
                 <p
-                  className="text-sm cursor-pointer text-slate-500 py-1 px-3 text-center hover:bg-slate-700 hover:text-slate-50 bg-gray-300 rounded-3xl"
+                  className="text-sm cursor-pointer text-slate-500 py-1 px-3 text-center hover:bg-slate-700 hover:text-slate-50 bg-gray-300 rounded-3xl mt-2"
                   onClick={() => dispatch(removeAll())}
                 >
                   Clear Cart
                 </p>
               </h1>
-              <h2 className="font-semibold text-2xl">
+              <h2 className="font-semibold text-xl md:text-2xl">
                 {cartItems.length} Items
               </h2>
             </div>
-            <div className="flex mt-10 mb-5">
+            <div className="mt-10 mb-5 hidden md:flex">
               <h3 className="font-semibold text-gray-600 text-xs uppercase w-2/5">
                 Product Details
               </h3>
@@ -65,14 +65,14 @@ export const Cart = () => {
                 Total
               </h3>
             </div>
-            <div className="h-96 overflow-y-auto">
+            <div className="mt-6 mb-4">
               {cartItems.map((item) => (
                 <CartCard key={item.id} {...item} />
               ))}
             </div>
             <Link
               to="/"
-              className="flex font-semibold text-indigo-600 text-sm mt-10"
+              className="flex font-semibold text-indigo-600 text-sm md:text-xl mt-6"
             >
               <svg
                 className="fill-current mr-2 text-indigo-600 w-4"
@@ -84,29 +84,33 @@ export const Cart = () => {
             </Link>
           </div>
 
-          <div className="w-1/4 px-8 py-3 bg-slate-100">
-            <h1 className="font-semibold text-2xl border-b pb-8">
+          <div className="w-full md:w-1/4 px-4 md:px-8 py-3 bg-slate-100">
+            <h1 className="font-semibold text-xl lg:text-2xl md:text-xl border-b pb-4">
               Order Summary
             </h1>
-            <div className="flex justify-between mt-10 mb-5">
-              <span className="font-semibold text-sm uppercase">
+            <div className="flex justify-between mt-6 md:mt-10 mb-5 md:block">
+              <span className="font-semibold text-sm md:text-base uppercase">
                 Items {cartItems.length}
               </span>
-              <span className="font-semibold text-sm">${cartTotalAmount}</span>
+              <span className="font-semibold text-sm md:text-base md:ml-2 md:block">
+                ${cartTotalAmount}
+              </span>
             </div>
             <div>
-              <div className="flex justify-between mt-10 mb-5">
-                <span className="font-semibold text-sm uppercase">
+              <div className="flex justify-between mt-6 md:mt-10 mb-5 md:block">
+                <span className="font-semibold text-sm md:text-base uppercase md:block">
                   Standard shipping
                 </span>
-                <span className="font-semibold text-sm"> $10.00</span>
+                <span className="font-semibold text-sm md:text-base md:block">
+                  $10.00
+                </span>
               </div>
             </div>
 
-            <div className="py-10">
+            <div className="py-6 md:py-10">
               <label
                 htmlFor="promo"
-                className="font-semibold inline-block mb-3 text-sm uppercase"
+                className="font-semibold inline-block mb-3 text-sm md:text-base uppercase"
               >
                 Promo Code
               </label>
@@ -114,22 +118,24 @@ export const Cart = () => {
                 type="text"
                 id="promo"
                 placeholder="Enter your code"
-                className="p-2 text-sm w-full"
+                className="p-2 text-sm md:text-base w-full"
                 readOnly
               />
             </div>
             <button
               disabled
-              className="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm cursor-not-allowed text-white uppercase"
+              className="bg-red-500 hover:bg-red-600 px-4 py-2 text-sm  cursor-not-allowed text-white uppercase"
             >
               Apply
             </button>
             <div className="border-t mt-8">
-              <div className="flex font-semibold justify-between py-6 text-sm uppercase">
-                <span>Total cost</span>
-                <span>${Number(cartTotalAmount) + 10}</span>
+              <div className="flex font-semibold justify-between py-4 md:py-6 text-sm md:text-base uppercase md:block">
+                <span className="md:block">Total cost</span>
+                <span className="md:block">
+                  ${Number(cartTotalAmount) + 10}
+                </span>
               </div>
-              <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                 Checkout
               </button>
             </div>
