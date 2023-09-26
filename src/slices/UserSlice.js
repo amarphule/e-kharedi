@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 const userToken = localStorage.getItem("token")
   ? localStorage.getItem("token")
@@ -28,8 +29,11 @@ export const userLogin = createAsyncThunk(
       const result = await resp.json();
       localStorage.setItem("token", result.token);
       const user = { username, password };
+
+      toast.success("Login successful!", { autoClose: 1000 });
       return { user, result };
     } catch (error) {
+      toast.error("Login failed. Please try again.", { autoClose: 1000 });
       return rejectWithValue("Username or Password is incorrect");
     }
   }

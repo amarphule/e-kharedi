@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import logo from "../../assets/logo.svg";
 import { FaCartPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../../slices/productsSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
+import { fetchProducts } from "../../slices/productsSlice";
 import { logout } from "../../slices/UserSlice";
+import logo from "../../assets/logo.svg";
 
 const Header = () => {
   const [categories, setCategories] = useState(["All"]);
@@ -30,6 +32,7 @@ const Header = () => {
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
+    toast.info("Logged out successfully.", { autoClose: 1000 });
   };
 
   return (
@@ -101,9 +104,19 @@ const Header = () => {
 
             <div className="ml-5">
               {userToken ? (
-                <Link onClick={handleLogout}>logout</Link>
+                <Link
+                  onClick={handleLogout}
+                  className="bg-cyan-900 p-2 rounded-md text-white font-bold"
+                >
+                  logout
+                </Link>
               ) : (
-                <Link to="/login">Login</Link>
+                <Link
+                  to="/login"
+                  className="bg-cyan-700 p-2 text-white rounded-md font-bold"
+                >
+                  Login
+                </Link>
               )}
             </div>
           </div>

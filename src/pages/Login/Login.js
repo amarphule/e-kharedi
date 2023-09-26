@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userLogin } from "../../slices/UserSlice";
 import { useNavigate } from "react-router-dom";
 
+import { userLogin } from "../../slices/UserSlice";
+
 const Login = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({ username: "", password: "" });
   const [asGuest, setAsGuest] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,18 +16,24 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setAsGuest(false);
-    setUser(null);
+    setUser({ username: "", password: "" });
     if (asGuest) {
       dispatch(userLogin(user));
     }
   };
+
   useEffect(() => {
     if (!!userToken) {
       navigate("/");
     }
-  });
+  }, [navigate, userToken]);
+
   const handleChange = (e) => {
     setUser((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  };
+  const handleAsGuest = (e) => {
+    setAsGuest(e.target.checked);
+    setUser({ username: "mor_2314", password: "83r5^_" });
   };
 
   return (
@@ -70,11 +77,7 @@ const Login = () => {
             />
           </div>
           <div>
-            <input
-              type="checkbox"
-              checked={asGuest}
-              onChange={(e) => setAsGuest(e.target.checked)}
-            />
+            <input type="checkbox" checked={asGuest} onChange={handleAsGuest} />
             <label className="ml-2">Login as Guest</label>
             {asGuest && (
               <p className="text-sm text-slate-500">
