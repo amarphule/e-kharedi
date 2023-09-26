@@ -6,6 +6,9 @@ const initialState = {
   isLoading: null,
   error: null,
   searchQuery: "",
+  categories: [],
+  categoryLoading: null,
+  categoryError: null,
 };
 
 export const fetchProducts = createAsyncThunk(
@@ -31,6 +34,21 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
+export const fetchCategory = createAsyncThunk(
+  "products/categories",
+  async (param, { rejectWithValue }) => {
+    let url = "https://fakestoreapi.com/products/categories/";
+    try {
+      const resp = await fetch(`${url}`);
+      const result = await resp.json();
+
+      return ["All", ...result];
+    } catch (e) {
+      return rejectWithValue("Oops error occurred while fetching categories");
+    }
+  }
+);
+
 const productsSlice = createSlice({
   name: "Products",
   initialState: initialState,
@@ -50,6 +68,19 @@ const productsSlice = createSlice({
     builder.addCase(fetchProducts.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+    });
+    builder.addCase(fetchCategory.pending, (state) => {
+      state.categoryLoading = true;
+      state.categoryError = null;
+    });
+    builder.addCase(fetchCategory.fulfilled, (state, action) => {
+      state.categoryLoading = false;
+      state.categories = action.payload;
+      state.categoryError = null;
+    });
+    builder.addCase(fetchCategory.rejected, (state, action) => {
+      state.categoryLoading = false;
+      state.categoryError = action.payload;
     });
   },
 });

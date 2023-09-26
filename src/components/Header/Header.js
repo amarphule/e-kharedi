@@ -4,25 +4,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { fetchProducts } from "../../slices/productsSlice";
+import { fetchCategory, fetchProducts } from "../../slices/productsSlice";
 import { logout } from "../../slices/UserSlice";
 import logo from "../../assets/logo.svg";
 
 const Header = () => {
-  const [categories, setCategories] = useState(["All"]);
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cartItems = useSelector((store) => store.cart?.cartItems?.length);
   const { userToken } = useSelector((store) => store.user);
-
-  const fetchCategory = async () => {
-    let data = await fetch("https://fakestoreapi.com/products/categories");
-    let categories = await data.json();
-    setCategories(["All", ...categories]);
-  };
+  const { categories } = useSelector((store) => store.products);
   useEffect(() => {
-    fetchCategory();
+    dispatch(fetchCategory());
   }, []);
 
   const handleCategory = (cat) => {
@@ -106,14 +100,14 @@ const Header = () => {
               {userToken ? (
                 <Link
                   onClick={handleLogout}
-                  className="bg-cyan-900 p-2 rounded-md text-white font-bold"
+                  className="bg-indigo-600 hover:bg-indigo-800 text-white font-semibold py-2 px-4 rounded-full mt-4"
                 >
                   logout
                 </Link>
               ) : (
                 <Link
                   to="/login"
-                  className="bg-cyan-700 p-2 text-white rounded-md font-bold"
+                  className="bg-indigo-600 hover:bg-indigo-800 text-white font-semibold py-2 px-4 rounded-full mt-4"
                 >
                   Login
                 </Link>
